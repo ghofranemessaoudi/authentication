@@ -64,6 +64,11 @@ function checkNotAuthenticated(req, res, next) {
   next();
 }
 
+app.get("/images/:img", (req, res) => {
+  res.sendFile(path.join(__dirname, "uploads", req.params.img));
+});
+
+
 ///////////////////////////////////////////////
 const passportGoogle = require("./passportGoogle");
 passportGoogle(passport);
