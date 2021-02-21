@@ -6,8 +6,8 @@ function initialize(passport) {
     new GoogleStrategy(
       {
         clientID:
-          "620902958049-iv3dlhu14iengn0baj4prumpfkie3rk5.apps.googleusercontent.com",
-        clientSecret: "7B_nsOQLwb0xnK4LBaEu5X-1",
+          "669406050674-nvnthuhns57summ9v9gp5nsrrlpqsr8n.apps.googleusercontent.com",
+        clientSecret: "Bvhj2Qfx7AAhx_Cs5Su0Fmt1",
         callbackURL: "/api/auth/google/redirect"
       },
       (accessToken, refreshToken, profile, done) => {

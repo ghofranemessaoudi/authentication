@@ -22,7 +22,9 @@
       </v-btn>
 
       <v-btn color="error" class="mr-4" @click="reset"> Reset Form </v-btn>
+      <v-btn href="/api/auth/google" >signin with google</v-btn>
     </v-form>
+   
   </v-card>
 </template>
 <script>
