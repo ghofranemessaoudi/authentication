@@ -64,7 +64,26 @@ function checkNotAuthenticated(req, res, next) {
   next();
 }
 
+///////////////////////////////////////////////
+const passportGoogle = require("./passportGoogle");
+passportGoogle(passport);
 
+
+app.get(
+  "/auth/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"]
+  })
+);
+
+app.get(
+  "/auth/google/redirect",
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  function(req, res) {
+    res.redirect("/");
+  }
+);
+/////////////////////////////////////////////////////
 module.exports = {
   path: "/api",
   handler: app
