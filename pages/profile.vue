@@ -28,13 +28,20 @@
               <input id="file-input" type="file" @change="onFileSelected" />
             </span>
           </v-row>
-          <v-card-title class="my-0" style="justify-content: center">User Name : {{
+
+           <template v-slot:item.actions="{ item }">
+      <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
+     
+    </template>
+        
+          <v-card-title class="my-0" style="justify-content: center" v-model="editedItem.username">User Name : {{
             user.username
           }}</v-card-title>
-           <v-card-subtitle class="my-0" style="text-align: center">Last Name :{{
+           <v-card-subtitle class="my-0" style="text-align: center" v-model="editedItem.lastName">Last Name :{{
             user.lastName
           }}</v-card-subtitle>
-           <v-card-subtitle class="my-0" style="text-align: center">Phone Number :{{
+           <v-card-subtitle class="my-0" style="text-align: center" v-model="editedItem.phoneNumber
+           ">Phone Number :{{
             user.phoneNumber
           }}</v-card-subtitle>
           <v-card-subtitle class="my-0" style="text-align: center">Email :{{
@@ -51,16 +58,58 @@ import { mapState, mapActions } from "vuex";
 import axios from "axios";
 export default {
   data: () => ({
-    stripeHandler: {},
+     editedIndex: -1,
+     editedItem: {
+      username: "",
+      lastName: "",
+      phoneNumber: 0
+    },
+    defaultItem: {
+     username: "",
+      lastName: "",
+      phoneNumber: 0
+    }
   }),
   mounted() {
     this.initialize();
   },
   computed: {
     ...mapState(["user"]),
+      formTitle() {
+      return this.editedIndex === -1 ? "New Item" : "Edit Item";
+    }
+  },
+  watch: {
+    dialog(val) {
+      val || this.close();
+    },
+    dialogDelete(val) {
+      val || this.closeDelete();
+    }
   },
   methods: {
     ...mapActions(["changeUser"]),
+    editItem(item) {
+      this.editedIndex = this.products.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
+    },
+    close() {
+      this.dialog = false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
+    },    async save() {
+      if (this.editedIndex > -1) {
+        Object.assign(this.products[this.editedIndex], this.editedItem);
+        await this.$axios.$put(
+          `/api/users/${this.editedItem._id}`,
+          this.editedItem
+        );
+      
+      }   this.close();
+    },
     initialize(){console.log(this.user)},
     async onFileSelected(event) {
       this.selectedFile = event.target.files[0];

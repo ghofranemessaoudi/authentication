@@ -22,7 +22,7 @@ router.route("/").get(function(req, res) {
 });
 router.route("/").put(function(req, res) {
   console.log(req.body);
-  userControle.update(req.user.id, req.body, (err, data) => {
+  userControle.findByIdAndUpdate(req.user.id, req.body, (err, data) => {
     if (err) {
       throw err;
     }
@@ -31,7 +31,7 @@ router.route("/").put(function(req, res) {
 });
 
 router.route("/image").put(upload.single("image"), function(req, res) {
-  userControle.update(
+  userControle.findByIdAndUpdate(
     req.user.id,
     { image: req.file.originalname },
     (err, data) => {
