@@ -28,10 +28,16 @@
               <input id="file-input" type="file" @change="onFileSelected" />
             </span>
           </v-row>
-          <v-card-title class="my-0" style="justify-content: center">{{
+          <v-card-title class="my-0" style="justify-content: center">User Name : {{
             user.username
           }}</v-card-title>
-          <v-card-subtitle class="my-0" style="text-align: center">{{
+           <v-card-subtitle class="my-0" style="text-align: center">Last Name :{{
+            user.lastName
+          }}</v-card-subtitle>
+           <v-card-subtitle class="my-0" style="text-align: center">Phone Number :{{
+            user.phoneNumber
+          }}</v-card-subtitle>
+          <v-card-subtitle class="my-0" style="text-align: center">Email :{{
             user.email
           }}</v-card-subtitle>
         </v-card>

@@ -42,7 +42,7 @@ var checkAuthenticated = (req, res, next) => {
 
 app.get("/user", (req, res) => {
   if (req.isAuthenticated()) {
-    let fields = ["_id", "username", "email", "type", "image"];
+    let fields = ["_id", "username","lastName","phoneNumber", "email", "type", "image"];
     let user = fields.reduce((acc, cv) => {
       acc[cv] = req.user[cv];
       return acc;
@@ -58,9 +58,9 @@ app.post("/login", passport.authenticate("local"), function(req, res) {
 });
 
 app.post("/register", checkNotAuthenticated, async (req, res) => {
-  let { username, email, password } = req.body;
+  let { username,lastName,phoneNumber, email, password } = req.body;
   try {
-    user = await User.save({ username, email, password });
+    user = await User.save({ username, lastName,phoneNumber, email, password });
     passport.authenticate("local")(req, res, function() {
       res.json({ user: req.user });
     });

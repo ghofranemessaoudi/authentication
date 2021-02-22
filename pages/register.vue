@@ -11,6 +11,22 @@
       ></v-text-field>
 
       <v-text-field
+        v-model="lastName"
+        :counter="10"
+        :rules="lastNameRules"
+        label="Last Name"
+        required
+      ></v-text-field>
+
+           <v-text-field
+        v-model="phoneNumber"
+        :counter="10"
+        :rules="phoneNumberRules"
+        label="Phone Number"
+        required
+      ></v-text-field>
+
+      <v-text-field
         v-model="email"
         :rules="emailRules"
         label="E-mail"
@@ -39,10 +55,22 @@ export default {
   data: () => ({
     valid: true,
     username: "",
+    lastName:"",
+    phoneNumber:"",
     usernameRules: [
       (v) => !!v || "username is required",
       (v) =>
         (v && v.length <= 10) || "username must be less than 10 characters",
+    ],
+    lastNameRules: [
+      (v) => !!v || "Last Name is required",
+      (v) =>
+        (v && v.length <= 10) || "Last Name must be less than 10 characters",
+    ],
+       phoneNumberRules: [
+      (v) => !!v || "Phone Number is required",
+      (v) =>
+        (v && v.length <= 10) || "Phone Number must be less than 9 characters",
     ],
     email: "",
     emailRules: [
@@ -62,6 +90,8 @@ export default {
       if (this.$refs.form.validate()) {
         let userAuth = {
           username: this.username,
+          lastName:this.lastName,
+          phoneNumber:this.phoneNumber,
           email: this.email,
           password: this.password,
         };

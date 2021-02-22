@@ -2,12 +2,14 @@ mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const UserSchema = new mongoose.Schema({
   username: String,
+  lastName:String,
+  phoneNumber:Number,
   email: String,
   password: String,
   provider: String,
   providerId: String,
   googleId: String,
-  image: { type: String, default: "profile_default.png" }
+  image:String
 });
 UserSchema.methods.validPassword = async function(password) {
   try {
@@ -21,7 +23,7 @@ UserSchema.methods.validPassword = async function(password) {
   }
 };
 const User = mongoose.model("User", UserSchema);
-const save = async ({ username, email, password }) => {
+const save = async ({ username, lastName,phoneNumber, email, password }) => {
   try {
     existUsername = await User.findOne({ username }).exec();
     existEmail = await User.findOne({ email }).exec();
@@ -33,6 +35,8 @@ const save = async ({ username, email, password }) => {
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = new User({
         username,
+        lastName,
+        phoneNumber,
         email,
         password: hashedPassword,
         provider: "local",
