@@ -22,7 +22,7 @@
       </v-btn>
 
       <v-btn color="error" class="mr-4" @click="reset"> Reset Form </v-btn>
-      <v-btn href="/api/auth/google" >signin with google</v-btn>
+      <v-btn href="/api/auth/google" @click="redirect" >signin with google</v-btn>
     </v-form>
    
   </v-card>
@@ -46,6 +46,9 @@ export default {
   }),
   methods: {
     ...mapActions(["changeUser"]),
+    redirect(){
+      this.$router.push("/profile");
+    },
     async validate() {
       if (this.$refs.form.validate()) {
         let userAuth = {

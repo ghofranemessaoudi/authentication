@@ -27,13 +27,7 @@
 
               <input id="file-input" type="file" @change="onFileSelected" />
             </span>
-          </v-row>
-
-           <template v-slot:item.actions="{ item }">
-      <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-     
-    </template>
-        
+          </v-row>  
           <v-card-title class="my-0" style="justify-content: center" v-model="editedItem.username">User Name : {{
             user.username
           }}</v-card-title>
@@ -90,7 +84,7 @@ export default {
   methods: {
     ...mapActions(["changeUser"]),
     editItem(item) {
-      this.editedIndex = this.products.indexOf(item);
+      this.editedIndex = this.user.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
@@ -102,7 +96,7 @@ export default {
       });
     },    async save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.products[this.editedIndex], this.editedItem);
+        Object.assign(this.user[this.editedIndex], this.editedItem);
         await this.$axios.$put(
           `/api/users/${this.editedItem._id}`,
           this.editedItem
@@ -124,7 +118,7 @@ export default {
           );
         },
       });
-      const user = await this.$axios.$get("/api/user");
+      const user = await this.$axios.$get("/api/users");
       if (user.username) {
         this.changeUser(user);
       } else {
