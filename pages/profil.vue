@@ -37,9 +37,6 @@
         </v-card>
       </v-col>
     </v-row>
-   
-
-     
   </v-container>
 </template>
 
@@ -58,6 +55,7 @@ export default {
   },
   methods: {
     ...mapActions(["changeUser"]),
+    initialize(){console.log(this.user)},
     async onFileSelected(event) {
       this.selectedFile = event.target.files[0];
       const fb = new FormData();

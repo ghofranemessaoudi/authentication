@@ -21,7 +21,9 @@
     "nuxt": "^2.14.12",
     "passport": "^0.4.1",
     "passport-google-oauth": "^2.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "vuelidate": "^0.7.6",
+    "vuesax": "^3.12.2"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.11.3",

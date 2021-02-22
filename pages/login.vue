@@ -28,7 +28,9 @@
   </v-card>
 </template>
 <script>
+  import { mapActions } from "vuex";
 export default {
+
   data: () => ({
     valid: true,
     email: "",
@@ -43,14 +45,22 @@ export default {
     ]
   }),
   methods: {
+    ...mapActions(["changeUser"]),
     async validate() {
       if (this.$refs.form.validate()) {
-        let user = {
+        let userAuth = {
           email: this.email,
           password: this.password
         };
-        let rtn = await this.$axios.$post("/api/login", user);
+        let rtn = await this.$axios.$post("/api/login", userAuth);
         console.log({ rtn });
+        const user = await this.$axios.$get("/api/user");
+        if (user.username) {
+          this.changeUser(user);
+        } else {
+          this.changeUser({ username: false });
+        }
+        this.$router.push("/profil");
       }
     },
     reset() {
