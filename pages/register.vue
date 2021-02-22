@@ -34,6 +34,7 @@
   </v-card>
 </template>
 <script>
+import { mapActions } from "vuex";
 export default {
   data: () => ({
     valid: true,
@@ -56,15 +57,24 @@ export default {
   }),
 
   methods: {
+    ...mapActions(["changeUser"]),
     async validate() {
       if (this.$refs.form.validate()) {
-        let user = {
+        let userAuth = {
           username: this.username,
           email: this.email,
           password: this.password,
         };
-        let rtn = await this.$axios.$post("/api/register", user);
-        console.log({user,rtn})
+        let rtn = await this.$axios.$post("/api/register", userAuth);
+        console.log({userAuth,rtn})
+        this.$router.push("/login");
+        const user = await this.$axios.$get("/api/user");
+        if (user.username) {
+          this.changeUser(user);
+        } else {
+          this.changeUser({ username: false });
+        }
+        this.$router.push("/profile");
       }
     },
     reset() {

@@ -60,7 +60,7 @@ export default {
         } else {
           this.changeUser({ username: false });
         }
-        this.$router.push("/profil");
+        this.$router.push("/profile");
       }
     },
     reset() {

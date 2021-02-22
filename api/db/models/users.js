@@ -5,7 +5,9 @@ const UserSchema = new mongoose.Schema({
   email: String,
   password: String,
   provider: String,
-  providerId: String
+  providerId: String,
+  googleId: String,
+  image: { type: String, default: "profile_default.png" }
 });
 UserSchema.methods.validPassword = async function(password) {
   try {
@@ -85,4 +87,5 @@ module.exports = {
   getUserById,
   getUserByEmail,
   findOrCreate,
+  
 };
