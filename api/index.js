@@ -1,6 +1,7 @@
 const express = require("express");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
+const path = require("path");
 const session = require("express-session");
 const app = express();
 
@@ -31,9 +32,25 @@ app.use(
 app.use(passport.initialize()); 
 app.use(passport.session());  
 
+var checkAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  } else {
+    return { username: false };
+  }
+};
+
 app.get("/user", (req, res) => {
-  console.log({ user: req.user });
-  res.json({ user: req.user });
+  if (req.isAuthenticated()) {
+    let fields = ["_id", "username", "email", "type", "image"];
+    let user = fields.reduce((acc, cv) => {
+      acc[cv] = req.user[cv];
+      return acc;
+    }, {});
+    return res.send(user);
+  } else {
+    return res.send({ username: false });
+  }
 });
 
 app.post("/login", passport.authenticate("local"), function(req, res) {
@@ -68,6 +85,9 @@ app.get("/images/:img", (req, res) => {
   res.sendFile(path.join(__dirname, "uploads", req.params.img));
 });
 
+
+var users = require("./routes/users.js");
+app.use("/users", checkAuthenticated, users);
 
 ///////////////////////////////////////////////
 const passportGoogle = require("./passportGoogle");
