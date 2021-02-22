@@ -118,7 +118,7 @@ export default {
           );
         },
       });
-      const user = await this.$axios.$get("/api/users");
+      const user = await this.$axios.$get("/api/user");
       if (user.username) {
         this.changeUser(user);
       } else {
