@@ -1,10 +1,12 @@
-# STORE
+Start with : npm install 
+then generate with : npm run generate
+and open with : npm run dev
 
-**This directory is not required, you can delete it if you don't want to use it.**
 
-This directory contains your Vuex Store files.
-Vuex Store option is implemented in the Nuxt.js framework.
-
-Creating a file in this directory automatically activates the option in the framework.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/guide/vuex-store).
+******************************************
+User story: I can register a new account
+User story: I can log in
+User story: I can log in or register with : Google
+User story: I can sign out
+User story: I can see my profile details
+User story: I can upload a new photo or provide an image URL
